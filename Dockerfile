@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     autogen \
     automake \
     libtool \
+    libcurl4-openssl-dev \
     make \
  && rm -rf /var/lib/apt/lists/*
 RUN (wget https://www.openssl.org/source/openssl-1.0.1j.tar.gz && \
@@ -41,10 +42,11 @@ RUN apt-get update && apt-get install -y \
     libqrencode-dev \
     libminiupnpc-dev \
     libevent-dev \
+    libcurl4-openssl-dev \
     libtool \
  && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /usr/local/ssl/bin/openssl /usr/local/ssl/bin/openssl
 RUN ln -sf /usr/local/ssl/bin/openssl `which openssl`
 COPY --from=builder /denarius/src/denariusd /usr/local/bin/
-EXPOSE 33369 9999
+EXPOSE 33369 9999 32369
 CMD ["/bin/bash"]
